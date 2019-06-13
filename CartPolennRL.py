@@ -7,7 +7,7 @@ import torch.nn.functional as F
 env = gym.make('CartPole-v0')
 
 #learning rate
-alpha = 5e-56
+alpha = 5e-5
 
 
 # N is batch size; D_in is input dimension;
@@ -51,7 +51,7 @@ def run(index):
     total_reward = 0
 
     for t in range(300):
-        if (index % 1000 == 0 or index > 17500):
+        if (index > 17500):
             env.render()
         action, y_pred = calculatePolicy(observation)
         calculateGradient(action, y_pred, observation)
@@ -71,7 +71,7 @@ def run(index):
     model.zero_grad()   
     env.close()
  
-for i in range(30000):
+for i in range(20000):
     print(i)
     run(i)
 
