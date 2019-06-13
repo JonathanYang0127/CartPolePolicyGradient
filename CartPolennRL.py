@@ -7,7 +7,7 @@ import torch.nn.functional as F
 env = gym.make('CartPole-v0')
 
 #learning rate
-alpha = 5e-6
+alpha = 5e-56
 
 
 # N is batch size; D_in is input dimension;
@@ -21,8 +21,8 @@ print(x.dtype)
 model = torch.nn.Sequential(
     torch.nn.Linear(D_in, H),
     torch.nn.ReLU(),
-    torch.nn.Linear(H, H),
-    torch.nn.ReLU(),
+    #torch.nn.Linear(H, H),
+    #torch.nn.ReLU(),
     torch.nn.Linear(H, D_out)
 )
 
@@ -51,7 +51,7 @@ def run(index):
     total_reward = 0
 
     for t in range(300):
-        if (index % 1000 == 0):
+        if (index % 1000 == 0 or index > 17500):
             env.render()
         action, y_pred = calculatePolicy(observation)
         calculateGradient(action, y_pred, observation)
@@ -69,6 +69,7 @@ def run(index):
     #print(total_reward)
     #We can zero out the gradients now (we have computed the sum of the gradients)
     model.zero_grad()   
+    env.close()
  
 for i in range(30000):
     print(i)
